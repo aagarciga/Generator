@@ -20,6 +20,8 @@ namespace Generator.Controllers
         //Alex: Doc here...
         //https://code-maze.com/create-pdf-dotnetcore/
 
+        public const string PHYSICALPATH = @"C:\Users\Alex\source\repos\Generator\Generator";
+
         private IConverter _converter;
 
         public GeneratorController(IConverter converter)
@@ -31,8 +33,8 @@ namespace Generator.Controllers
         public IActionResult PaxList()
         {
             //var cssPath = Path.Combine(Environment.CurrentDirectory.ToString(), "wwwroot", "Assets", "styles.css");
-            var cssPath = Path.Combine(@"C:\Users\Alex\source\repos\Generator\","Assets", "styles.css");
-            var templatePath = Path.Combine(@"C:\Users\Alex\source\repos\Generator\", "Assets", "Templates", "Reports");
+            var cssPath = Path.Combine(PHYSICALPATH, "Assets", "styles.css");
+            var templatePath = Path.Combine(PHYSICALPATH, "Assets", "Templates", "Reports");
 
             var globalSettings = new GlobalSettings
             {
@@ -90,8 +92,8 @@ namespace Generator.Controllers
         [HttpGet]
         [Route("hotelmaretraite/reservationconfirmation")]
         public IActionResult HotelMaretraiteReservationConfirmation() {
-            var cssPath = Path.Combine(@"C:\Users\Alex\source\repos\Generator\", "Assets", "Styles", "HotelMaretraiteReservationConfirmation.css");
-            var templatePath = Path.Combine(@"C:\Users\Alex\source\repos\Generator\", "Assets", "Templates", "Reports");
+            var cssPath = Path.Combine(PHYSICALPATH, "Assets", "Styles", "HotelMaretraiteReservationConfirmation.css");
+            var templatePath = Path.Combine(PHYSICALPATH, "Assets", "Templates", "Reports");
 
             AccommodationReservation accommodationReservation = DataSource.GetAccommodationReservation();
 
@@ -144,5 +146,7 @@ namespace Generator.Controllers
             //return File(file, "application/pdf", "PaxList.pdf");
             return File(file, "application/pdf");
         }
+
+
     }
 }

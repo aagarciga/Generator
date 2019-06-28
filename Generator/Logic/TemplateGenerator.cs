@@ -22,8 +22,10 @@ namespace Generator.Logic
 
     public static class TemplateGenerator
     {
+        public const string PHYSICALPATH = @"C:\Users\Alex\source\repos\Generator\Generator";
         public static string GetHTMLString()
         {
+
             uint counter = 1;
             List<Pax> passengers = DataSource.GetPaxList();
 
@@ -95,7 +97,7 @@ namespace Generator.Logic
             const string LONG_DATE_FORMAT = "dd MMMM yyyy";
             const string CURRENCY_FORMAT = "$0,0.00";
 
-            string templatePath = Path.Combine(@"C:\Users\Alex\source\repos\Generator\", "Assets", "Templates", "Reports");
+            string templatePath = Path.Combine(PHYSICALPATH, "Assets", "Templates", "Reports");
             string templateName = "Reservation.Confirmation.Hotel.Maretraite.Template.html";
 
             double total = calculateTotal(model);
