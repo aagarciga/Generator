@@ -91,9 +91,10 @@ namespace Generator.Logic
             return sb.ToString();
         }
 
-        public static string GetHTMLForHotelMaretraiteReservationConfirmation(AccommodationReservation model, bool commissionable = false)
+        public static string GetHTMLForHotelMaretraiteReservationConfirmation(AccommodationReservation model, bool commissionable = false, double handlingFee = 0.0)
         {
             const double COMMISSION_VALUE = 3.0;
+            const double HANDLINGFEE_VALUE = 10.0;
             const string LONG_DATE_FORMAT = "dd MMMM yyyy";
             const string CURRENCY_FORMAT = "$0,0.00";
 
@@ -103,7 +104,8 @@ namespace Generator.Logic
             double total = calculateTotal(model);
             int nights = (model.CheckOut - model.CheckIn).Days;
             double paidInAdvance = commissionable ? (nights * COMMISSION_VALUE) : 0;
-            double totalDue = total - paidInAdvance;
+            double hanldingFee = handlingFee != 0 ? handlingFee : 0;
+            double totalDue = total - paidInAdvance + hanldingFee;
 
             string result = File.ReadAllText(Path.Combine(templatePath, templateName));
 
@@ -114,7 +116,8 @@ namespace Generator.Logic
             
             result = result.Replace("{TBodyAccommodationServices}", buildAccommodationServiceTableBody(model, nights, total, CURRENCY_FORMAT));
             result = result.Replace("{Total}",total.ToString(CURRENCY_FORMAT));
-            result = result.Replace("{PaidInAdvance}", paidInAdvance.ToString(CURRENCY_FORMAT));
+            //result = result.Replace("{PaidInAdvance}", paidInAdvance.ToString(CURRENCY_FORMAT));
+           // result = result.Replace("{HanldingFee}", hanldingFee.ToString(CURRENCY_FORMAT));
             result = result.Replace("{TotalDue}", totalDue.ToString(CURRENCY_FORMAT));
 
             result = result.Replace("{TBodyGuests}", buildGuestsTableBody(model));
@@ -122,6 +125,62 @@ namespace Generator.Logic
             return result;
         }
 
+        public static string GetHTMLForHotelMaretraiteVoucher(AccommodationReservation model)
+        {
+            const string LONG_DATE_FORMAT = "dd MMMM yyyy";
+
+            string templatePath = Path.Combine(PHYSICALPATH, "Assets", "Templates", "Reports");
+            string templateName = "Reservation.Confirmation.Hotel.Maretraite.Template.html";
+
+            double total = calculateTotal(model);
+            int nights = (model.CheckOut - model.CheckIn).Days;
+
+            string result = File.ReadAllText(Path.Combine(templatePath, templateName));
+
+            result = result.Replace("{IssueDate}", model.IssueDate.ToShortDateString());
+            result = result.Replace("{AccommodationPNR}", model.PNR);
+            result = result.Replace("{CheckIn}", model.CheckIn.ToString(LONG_DATE_FORMAT));
+            result = result.Replace("{CheckOut}", model.CheckOut.ToString(LONG_DATE_FORMAT));
+
+            result = result.Replace("{TBodyAccommodationServices}", buildVoucherAccommodationServiceTableBody(model, nights));
+
+            result = result.Replace("{TBodyGuests}", buildFullGuestsTableBody(model));
+
+            return result;
+        }
+
+        public static string GetHTMLForHotelMaretraiteReservationInvoice(AccommodationReservation model, bool commissionable = false, double handlingFee = 0.0) {
+            const double COMMISSION_VALUE = 3.0;
+            const string LONG_DATE_FORMAT = "dd MMMM yyyy";
+            const string CURRENCY_FORMAT = "$0,0.00";
+            const double HANDLINGFEE_VALUE = 10.0;
+
+            string templatePath = Path.Combine(PHYSICALPATH, "Assets", "Templates", "Reports");
+            string templateName = "Reservation.Invoice.Hotel.Maretraite.Template.html";
+
+            double total = calculateTotal(model);
+            int nights = (model.CheckOut - model.CheckIn).Days;
+            double paidInAdvance = commissionable ? (nights * COMMISSION_VALUE) : 0;
+            double hanldingFee = handlingFee != 0 ? HANDLINGFEE_VALUE : 0;
+
+            double totalDue = total - paidInAdvance;
+
+            string result = File.ReadAllText(Path.Combine(templatePath, templateName));
+
+            result = result.Replace("{InvoiceNo}", model.CommercialDocuments.FirstOrDefault().Code); 
+            result = result.Replace("{IssueDate}", model.IssueDate.ToShortDateString());
+            result = result.Replace("{AccommodationPNR}", model.PNR);
+            result = result.Replace("{CheckIn}", model.CheckIn.ToString(LONG_DATE_FORMAT));
+            result = result.Replace("{CheckOut}", model.CheckOut.ToString(LONG_DATE_FORMAT));
+
+            result = result.Replace("{TBodyAccommodationServices}", buildAccommodationServiceTableBody(model, nights, total, CURRENCY_FORMAT));
+            result = result.Replace("{Total}", total.ToString(CURRENCY_FORMAT));
+            result = result.Replace("{PaidInAdvance}", paidInAdvance.ToString(CURRENCY_FORMAT));
+            result = result.Replace("{TotalDue}", totalDue.ToString(CURRENCY_FORMAT));
+
+            
+            return result;
+        }
 
         private static double calculateTotal(AccommodationReservation model) {
             double result = 0;
@@ -163,7 +222,49 @@ namespace Generator.Logic
             return result.ToString();
         }
 
+        private static string buildVoucherAccommodationServiceTableBody(AccommodationReservation model, int nights)
+        {
+            StringBuilder result = new StringBuilder();
+
+            foreach (AccommodationService accommodationService in model.AccommodationServices)
+            {
+                result.AppendFormat(
+                $@"
+                    <tr>
+                        <td>{{0}}</td>
+                        <td>{{1}}</td>
+                        <td>{{2}}</td>
+                        <td>{{3}}</td>
+                    </tr>",
+                model.AccommodationServices.Count,
+                accommodationService.RoomType,
+                accommodationService.MealPlan,
+                nights
+                );
+            }
+            return result.ToString();
+        }
+
         private static string buildGuestsTableBody(AccommodationReservation model)
+        {
+            StringBuilder result = new StringBuilder();
+            foreach (Pax pax in model.Guests)
+            {
+                result.AppendFormat(
+                @"
+                    <tr>
+                        <td>{0}</td>
+                        <td>{1}</td>
+                    </tr>
+                ",
+                (pax.Gender == Sex.Male?"Mr.": "Mrs."),
+                pax.FullName
+                );
+            }
+            return result.ToString();
+        }
+
+        private static string buildFullGuestsTableBody(AccommodationReservation model)
         {
             StringBuilder result = new StringBuilder();
             foreach (Pax pax in model.Guests)
@@ -176,13 +277,13 @@ namespace Generator.Logic
                         <td>{2}</td>
                     </tr>
                 ",
-                (pax.Gender == Sex.Male?"Mr.": "Mrs."),
+                (pax.Gender == Sex.Male ? "Mr." : "Mrs."),
                 pax.FullName,
-                pax.Passport
+                pax.FlightBookingPNR
                 );
             }
             return result.ToString();
         }
-       
+
     }
 }

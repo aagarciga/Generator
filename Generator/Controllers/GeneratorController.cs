@@ -93,7 +93,6 @@ namespace Generator.Controllers
         [Route("hotelmaretraite/reservationconfirmation")]
         public IActionResult HotelMaretraiteReservationConfirmation() {
             var cssPath = Path.Combine(PHYSICALPATH, "Assets", "Styles", "HotelMaretraiteReservationConfirmation.css");
-            var templatePath = Path.Combine(PHYSICALPATH, "Assets", "Templates", "Reports");
 
             AccommodationReservation accommodationReservation = DataSource.GetAccommodationReservation();
 
@@ -103,7 +102,7 @@ namespace Generator.Controllers
                 Orientation = Orientation.Portrait,
                 PaperSize = PaperKind.A4,
                 Margins = new MarginSettings { Top = 0, Bottom = 10, Left = 0, Right = 0 },
-                DocumentTitle = "Hotel Maretraite Reservation Confirmation",
+                DocumentTitle = "Reservation Confirmation | Hotel Maretraite ",
                 //Out = @"C:\Users\Alex\source\repos\Generator\PaxList.pdf"
             };
 
@@ -111,7 +110,7 @@ namespace Generator.Controllers
             {
                 PagesCount = true,
 
-                HtmlContent = TemplateGenerator.GetHTMLForHotelMaretraiteReservationConfirmation(accommodationReservation),
+                HtmlContent = TemplateGenerator.GetHTMLForHotelMaretraiteReservationConfirmation(accommodationReservation, false, handlingFee: 0.00),
                 WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = cssPath },
 
                 HeaderSettings = {
@@ -138,15 +137,58 @@ namespace Generator.Controllers
             //context.LoadUnmanagedLibrary(@"C:\Users\Alex\source\repos\Generator\libwkhtmltox.dll");
             //Path.Combine(Directory.GetCurrentDirectory(), "libwkhtmltox.dll")
 
-            var converter = new SynchronizedConverter(new PdfTools());
+            //var converter = new SynchronizedConverter(new PdfTools());
 
             //return Ok("Successfully created PDF document.");
-            var file = _converter.Convert(pdf);
+            byte[] file = _converter.Convert(pdf);
             //Alex: To Download the file
             //return File(file, "application/pdf", "PaxList.pdf");
             return File(file, "application/pdf");
         }
 
+        [HttpGet]
+        [Route("hotelmaretraite/reservationinvoice")]
+        public IActionResult HotelMaretraiteReservationInvoice() {
+
+            AccommodationReservation accommodationReservation = DataSource.GetAccommodationReservation();
+
+            string cssPath = Path.Combine(PHYSICALPATH, "Assets", "Styles", "HotelMaretraiteReservationInvoice.css");
+
+            var globalSettings = new GlobalSettings
+            {
+                ColorMode = ColorMode.Color,
+                Orientation = Orientation.Portrait,
+                PaperSize = PaperKind.A4,
+                Margins = new MarginSettings { Top = 0, Bottom = 10, Left = 0, Right = 0 },
+                DocumentTitle = "Invoice | Hotel Maretraite ",
+                
+            };
+
+            var objectSettings = new ObjectSettings
+            {
+                PagesCount = true,
+
+                HtmlContent = TemplateGenerator.GetHTMLForHotelMaretraiteReservationInvoice(accommodationReservation, false),
+                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = cssPath },
+
+                HeaderSettings = {                    
+                    Spacing = 0,
+                    FontName = "Roboto Regular",
+                    FontSize = 12,
+                    Line = false ,
+                },
+                FooterSettings = { Spacing = 3, FontName = "Roboto", FontSize = 8, Line = false, Left = string.Format("            © {0} All rights reserved.", DateTime.Now.Year), Right = "Page [page] of [toPage]                  " },
+            };
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = globalSettings,
+                Objects = { objectSettings }
+            };
+
+            byte[] file = _converter.Convert(pdf);
+            return File(file, "application/pdf");
+        }
 
     }
 }

@@ -1,0 +1,85 @@
+﻿html {
+  height: 100%; }
+
+body#hotel-maretraite-reservation-invoice {
+  font-family: Roboto, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #444;
+  padding: 50px 50px 25px 50px;
+  font-size: 16px;
+  line-height: 1.5em;
+  height: 100%; }
+  body#hotel-maretraite-reservation-invoice h1, body#hotel-maretraite-reservation-invoice h2, body#hotel-maretraite-reservation-invoice h3, body#hotel-maretraite-reservation-invoice h4, body#hotel-maretraite-reservation-invoice h5 {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    text-transform: uppercase; }
+  body#hotel-maretraite-reservation-invoice table {
+    border-collapse: collapse; }
+    body#hotel-maretraite-reservation-invoice table thead tr {
+      border-bottom: 1px solid #444;
+      text-align: left; }
+    body#hotel-maretraite-reservation-invoice table tbody tr {
+      height: 3em; }
+      body#hotel-maretraite-reservation-invoice table tbody tr:last-of-type {
+        border-bottom: 1px solid #aaa; }
+  body#hotel-maretraite-reservation-invoice > header .brading > img {
+    display: inline-block;
+    height: 100px;
+    vertical-align: middle; }
+  body#hotel-maretraite-reservation-invoice > header .brading .brand-name {
+    font-weight: bold;
+    font-size: 3.5em;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    margin-top: -10px; }
+  body#hotel-maretraite-reservation-invoice > header .brading .address {
+    display: block;
+    position: relative;
+    top: -30px;
+    left: 111px; }
+  body#hotel-maretraite-reservation-invoice > .content > header > h1 {
+    font-weight: initial;
+    font-size: 1.2em;
+    text-align: right;
+    text-transform: none; }
+  body#hotel-maretraite-reservation-invoice > .content > header > .header-summary {
+    line-height: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 3em; }
+  body#hotel-maretraite-reservation-invoice > .content > article > header h2 {
+    text-transform: none;
+    font-weight: normal; }
+  body#hotel-maretraite-reservation-invoice > .content > article > table {
+    margin-top: 1em;
+    width: 100%; }
+  body#hotel-maretraite-reservation-invoice > .content > article > footer {
+    margin-top: 1em;
+    text-align: right; }
+    body#hotel-maretraite-reservation-invoice > .content > article > footer ul {
+      padding: 0; }
+      body#hotel-maretraite-reservation-invoice > .content > article > footer ul li {
+        list-style: none; }
+        body#hotel-maretraite-reservation-invoice > .content > article > footer ul li:last-of-type {
+          border-top: 1px solid #aaa; }
+        body#hotel-maretraite-reservation-invoice > .content > article > footer ul li strong {
+          display: inline-block;
+          width: 8em;
+          text-align: left; }
+        body#hotel-maretraite-reservation-invoice > .content > article > footer ul li span {
+          display: inline-block;
+          width: 8em; }
+  body#hotel-maretraite-reservation-invoice > .content > footer > table {
+    margin-top: 1em;
+    width: 50%; }
+  body#hotel-maretraite-reservation-invoice > footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: -3px; }
+    body#hotel-maretraite-reservation-invoice > footer ul {
+      float: right;
+      margin-right: 50px;
+      text-align: right; }
+      body#hotel-maretraite-reservation-invoice > footer ul li {
+        list-style: none; }

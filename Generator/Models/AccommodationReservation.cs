@@ -16,6 +16,8 @@ namespace Generator.Models
 
         public List<AccommodationService> AccommodationServices { get; set; }
         public List<Pax> Guests { get; set; }
+
+        public List<CommercialDocument> CommercialDocuments { get; set; }
        
     }
 }

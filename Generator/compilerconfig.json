@@ -2,5 +2,9 @@
   {
     "outputFile": "Assets/Styles/HotelMaretraiteReservationConfirmation.css",
     "inputFile": "Assets/Styles/HotelMaretraiteReservationConfirmation.scss"
+  },
+  {
+    "outputFile": "Assets/Styles/HotelMaretraiteReservationInvoice.css",
+    "inputFile": "Assets/Styles/HotelMaretraiteReservationInvoice.scss"
   }
 ]

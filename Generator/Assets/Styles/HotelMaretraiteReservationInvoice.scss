@@ -1,0 +1,175 @@
+﻿html {
+    height: 100%;
+}
+
+body#hotel-maretraite-reservation-invoice {
+    font-family: Roboto, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #444;
+    padding: 50px 50px 25px 50px;
+    font-size: 16px;
+    line-height: 1.5em;
+    height: 100%;
+
+    h1, h2, h3, h4, h5 {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+
+    table {
+        border-collapse: collapse;
+
+        thead {
+            tr {
+                border-bottom: 1px solid #444;
+                text-align: left;
+            }
+        }
+
+        tbody {
+            tr {
+                height: 3em;
+
+                &:last-of-type {
+                    border-bottom: 1px solid #aaa;
+                }
+
+                td {
+                }
+            }
+        }
+    }
+
+    > header {
+
+
+        .brading {
+
+            > img {
+                display: inline-block;
+                height: 100px;
+                vertical-align: middle;
+            }
+
+            .brand-name {
+                font-weight: bold;
+                font-size: 3.5em;
+                display: inline-block;
+                vertical-align: middle;
+                margin-left: 10px;
+                margin-top: -10px;
+            }
+
+            .address {
+                display: block;
+                position: relative;
+                top: -30px;
+                left: 111px;
+            }
+        }
+    }
+
+    > .content {
+        > header {
+            > h1 {
+                font-weight: initial;
+                font-size: 1.2em;
+                text-align: right;
+                text-transform: none;
+            }
+
+            > .header-summary {
+                line-height: 1.5em;
+                margin-top: 1em;
+                margin-bottom: 3em;
+            }
+        }
+
+        > article {
+            > header {
+                h1 {
+                }
+
+                h2 {
+                    text-transform: none;
+                    font-weight: normal;
+                }
+            }
+
+            > table {
+                margin-top: 1em;
+                width: 100%;
+
+                thead {
+                    tr {
+                        th {
+                        }
+                    }
+                }
+
+                tbody {
+                    tr {
+                        td {
+                        }
+                    }
+                }
+            }
+
+            > footer {
+                margin-top: 1em;
+                text-align: right;
+
+                ul {
+                    padding: 0;
+
+                    li {
+                        list-style: none;
+
+                        &:last-of-type {
+                            border-top: 1px solid #aaa;
+                        }
+
+                        strong {
+                            display: inline-block;
+                            width: 8em;
+                            text-align: left;
+                        }
+
+                        span {
+                            display: inline-block;
+                            width: 8em;
+                        }
+                    }
+                }
+            }
+        }
+
+        > footer {
+            > h1 {
+            }
+
+            > table {
+                margin-top: 1em;
+                width: 50%;
+            }
+        }
+    }
+
+    > footer {
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: -3px;
+
+        ul {
+            float: right;
+            margin-right: 50px;
+            text-align: right;
+
+            li {
+                list-style: none;
+            }
+        }
+    }
+}

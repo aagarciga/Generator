@@ -12,17 +12,17 @@ namespace Generator.Logic
         {
             return new List<Pax>
             {
-                new Pax { Name="ALBERTO ALEJANDRO",       LastName="GONZALEZ DIEGUEZ",  Gender=Sex.Male,  Passport="J738417", FlightBookingPNR="8W27IO", AccommodationBookingPNR="HM4494", AccommodationBookingStaying="24 Jun - 1 Jul", AccommodationBookingNights=7},
-                new Pax { Name="MARGARITA",     LastName="FERRANDO BRINGAS",    Gender=Sex.Female,  Passport="K468865", FlightBookingPNR="8W27IO", AccommodationBookingPNR="HM4494", AccommodationBookingStaying="24 Jun - 1 Jul", AccommodationBookingNights=7},
-                new Pax { Name="BARAINA",       LastName="MENENDEZ ROMERO",     Gender=Sex.Female,  Passport="K439853", FlightBookingPNR="8W27IO", AccommodationBookingPNR="HM4494", AccommodationBookingStaying="24 Jun - 1 Jul", AccommodationBookingNights=7}
+                new Pax { Name="Yenislexis",       LastName="Pereira Pereira",  Gender=Sex.Female,    Passport="", FlightBookingPNR="8W2CNJ ", AccommodationBookingPNR="HM4503", AccommodationBookingStaying="09 Aug - 13 Aug", AccommodationBookingNights=4},
+                new Pax { Name="Yeniseys",     LastName="Hernandez Pereira", Gender=Sex.Female,  Passport=" ", FlightBookingPNR="8W2CNJ ", AccommodationBookingPNR="HM4503", AccommodationBookingStaying="09 Aug - 13 Aug", AccommodationBookingNights=4}
             };
         }
 
+
         public static AccommodationReservation GetAccommodationReservation()
         {
-            var pnr = "HM4495";
-            var checkIn = new DateTime(2019, 7, 15);
-            var checkOut = new DateTime(2019, 7, 22);
+            var pnr = "HM4503";
+            var checkIn = new DateTime(2019, 8, 9);
+            var checkOut = new DateTime(2019, 8, 13);
 
             return new AccommodationReservation
             {
@@ -35,26 +35,51 @@ namespace Generator.Logic
                     new AccommodationService
                     {
                         MealPlan = MealPlan.MAP,
-                        RoomType = RoomType.Single,
+                        RoomType = RoomType.Double,
                         Rate = 44.00
                     }
                 },
                 Guests = new List<Pax>
                 {
+
                     new Pax
                     {
-                        Name = "Miguel Emilio",
-                        LastName = "Ceballos Dominguez",
-                        Gender = Sex.Male,
-                        Passport = "K041930",
-                        FlightBookingPNR = "8W285B",
+                        Name = "Yenislexis",
+                        LastName = "Pereira Pereira",
+                        Gender = Sex.Female,
+                        Passport = "",
+                        FlightBookingPNR = "8W2CNJ",
                         PaxType = PaxType.Adult,                            
-                        PassportExpire = new DateTime(2025, 01, 25),
-                        BirthDate = new DateTime(1983, 04, 14),
+                        PassportExpire = new DateTime(2024, 9, 12), // Not
+                        BirthDate = new DateTime(1993, 2, 9), // Not
                         Nationality = "CU",
                         AccommodationBookingPNR = pnr,
                         AccommodationBookingNights = (uint)(checkOut - checkIn).Days,
                         AccommodationBookingStaying = string.Format("{0} - {1}", checkIn.ToString("dd MMMM"), checkOut.ToString("dd MMMM"))
+                    },
+                     new Pax
+                    {
+                        Name = "Yeniseys",
+                        LastName = "Hernandez Pereira",
+                        Gender = Sex.Female,
+                        Passport = "",
+                        FlightBookingPNR = "8W2CNJ",
+                        PaxType = PaxType.Adult,
+                        PassportExpire = new DateTime(2024, 9, 12),
+                        BirthDate = new DateTime(1993, 2, 9),
+                        Nationality = "CU",
+                        AccommodationBookingPNR = pnr,
+                        AccommodationBookingNights = (uint)(checkOut - checkIn).Days,
+                        AccommodationBookingStaying = string.Format("{0} - {1}", checkIn.ToString("dd MMMM"), checkOut.ToString("dd MMMM"))
+                    }
+                },
+                CommercialDocuments = new List<CommercialDocument> {
+                    new CommercialDocument{
+                         Id = 1,
+                         BookingId = pnr,
+                         Code = string.Format( "{0}-01", pnr),
+                         Currency = Currency.USD,
+                         Amount = 0
                     }
                 }
             };
